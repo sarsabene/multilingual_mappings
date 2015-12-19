@@ -88,7 +88,7 @@ public class Main {
 	  String lang="FR";
 	  String tableFR =lang+"_"+ontologieFR;
 	  BDD.CreateTableForOntologie(conn,tableFR, lang);
-	  OntologieJena.DataFromOntologyToTable(ontologieFR,input.toUri().toString(), skos+"altLabel",tableFR);
+	  OntologieJena.DataFromOntologyToTable(ontologieFR,input.toUri().toString(), skos+"prefLabel",tableFR);
        
 
 	   String ontologieEN="ICPC2P";
