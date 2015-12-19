@@ -82,18 +82,13 @@ public class Main {
 			
 			
 	  
-	    java.sql.Connection conn=BDD.ConnexionDB();
-	//  BDD.AfficherStatistiques(conn, "fr_medlineplus", "en_medlineplus");
-	    
-	    Path input = Paths.get(CIM_10_PATH, "CIM_10.owl");    
-	    String ontologieFR="cim_10";
-	    String lang="FR";
-	    String tableFR =lang+"_"+ontologieFR;
-	  //  BDD.CreateTableForOntologie(conn,tableFR, lang);
-	  //  OntologieJena.DataFromOntologyToTable(ontologieFR,input.toUri().toString(), skos+"altLabel",tableFR);
-	    
-	//  BDD.addColumn(conn, tableFR, "prefLab", "varchar(200)");
- //OntologieJena.UpdateLabelColumn(input.toUri().toString(), skos+"prefLabel",tableFR, "prefLab");
+	  java.sql.Connection conn=BDD.ConnexionDB();
+	  Path input = Paths.get(CISP2_PATH, "cisp2.owl");    
+	  String ontologieFR="cisp2";
+	  String lang="FR";
+	  String tableFR =lang+"_"+ontologieFR;
+	  BDD.CreateTableForOntologie(conn,tableFR, lang);
+	  OntologieJena.DataFromOntologyToTable(ontologieFR,input.toUri().toString(), skos+"altLabel",tableFR);
        
 
 	   String ontologieEN="ICPC2P";
@@ -101,65 +96,19 @@ public class Main {
 	   String tableEN =lang+"_"+ontologieEN;
 	   input = Paths.get(CISP2_PATH, "icpc2p.ttl");
 	   BDD.CreateTableForOntologie(conn,tableEN, lang);  
-       OntologieJena.DataFromOntologyToTable(ontologieEN,input.toUri().toString(),"http://purl.bioontology.org/ontology/ICPC2P/ICPCCODE",tableEN);
-       // OntologieJena.UpdateColumn(input.toUri().toString(), umls+"cui", "^^", tableEn, "cui");
-//	BDD.addColumn(conn, tableEN, "prefLab", "varchar(200)");
-  //  OntologieJena.UpdateLabelColumn(input.toUri().toString(), skos+"prefLabel",tableEN, "prefLab");
+           OntologieJena.DataFromOntologyToTable(ontologieEN,input.toUri().toString(),"http://purl.bioontology.org/ontology/ICPC2P/ICPCCODE",tableEN);
+     
 	    
-	  
-	//  StopWatch time = new StopWatch( );
+	   StopWatch time = new StopWatch( );
 	 //Premier traitement pris en compte
-	  // time.start( );
-	  // String query1="SELECT distinct en.uri, fr.uri FROM en_"+ontologieEN+" en, FR_"+ontologieFR+" fr WHERE en.code=fr.code";
-	//  String query2="SELECT en.uri, fr.uri FROM "+tableEn+" en, "+tableFR+" fr WHERE en.uri=fr.uri  ";
-	  // System.out.println(query1);
-	   //BDD.fichierJson(query1, "C:/Users/amina.annane/Desktop/Clement_mini_projet/sty/"+ontologieFR+" Mapping par code 12 08 2015.txt","ncbo:STY", "STY");
-	  // System.out.println("Run time : " + time.getTime()+" milisecondes");
+	   time.start( );
+	   String query1="SELECT distinct en.uri, fr.uri FROM en_"+ontologieEN+" en, FR_"+ontologieFR+" fr WHERE en.code=fr.code";
+	   String query2="SELECT en.uri, fr.uri FROM "+tableEn+" en, "+tableFR+" fr WHERE en.uri=fr.uri  ";
+	   System.out.println(query1);
+	   BDD.fichierJson(query1, "C:/Users/amina.annane/Desktop/Clement_mini_projet/sty/"+ontologieFR+" Mapping par code 12 08 2015.txt","ncbo:STY", "STY");
+	   System.out.println("Run time : " + time.getTime()+" milisecondes");
 		
 		}}
 
 
-/* 
- * lire le fichier xml
- * 	String reference;
-			String concept;
-			java.sql.Connection conn=BDD.ConnexionDB();
-			BDD.CreateTableForOntologie(conn,"SNMI_reference", "");
-		    Path input = Paths.get(SNMIFRE_PATH, "snmifre.owl");    
-			String chaine="";
-			String fichier ="fichiertexte.txt";
-			
-			//lecture du fichier texte	
-			try{
-				InputStream ips=new FileInputStream("C:\\Users\\amina.annane\\Desktop\\Clement_mini_projet\\SNMIFRE\\snmifre.owl"); 
-				InputStreamReader ipsr=new InputStreamReader(ips);
-				BufferedReader br=new BufferedReader(ipsr);
-				String ligne;
-				while ((ligne=br.readLine())!=null){
-					
-					if(ligne.contains("<owl:Class")){
-					 concept=ligne.substring(ligne.indexOf("=")+2, ligne.indexOf(">")-1);
-						while ((ligne=br.readLine())!=null){
-							if(ligne.contains("</owl:Class>")){break;}
-							else{
-								if(ligne.contains("owl:someValuesFrom")){
-								    reference=ligne.substring(ligne.indexOf("#")+1,ligne.indexOf("/>")-1);
-									System.out.println(reference);
-									BDD.Ajouter("_SNMI_reference",concept, reference,"");
-								}
-							}
-						}
-						
-						
-					}
-				//	System.out.println(ligne);
-				//	chaine+=ligne+"\n";
-				}
-				br.close(); 
-			}		
-			catch (Exception e){
-				System.out.println(e.toString());
-			}
-			
- * 
- * */
+
