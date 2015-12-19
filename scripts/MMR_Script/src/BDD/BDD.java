@@ -15,9 +15,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
-
-
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +63,7 @@ private static String BDD="mapping";
 	}
 	
 
-/* ######################################## Connexion à la base de données ######################################" */
+/* ######################################## Connexion Ã  la base de donnÃ©es ######################################" */
 	
 	public static Connection ConnexionDB(){
 		try{
@@ -84,7 +81,7 @@ private static String BDD="mapping";
 		
 
 	}
-/* ####################################### Créer une table pour une ontologie ####################################################" */
+/* ####################################### CrÃ©er une table pour une ontologie ####################################################" */
 
 public static void CreateTableForOntologie(Connection connexion,String tablefR, String language){
 	
@@ -111,7 +108,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 	try{
 		
 		String query="ALTER TABLE "+tableFR+" ADD COLUMN "+Column+" "+type+";";
-	    System.out.println(query);
+	        System.out.println(query);
 		conn=connexion;
 		st= conn.createStatement();
 		st.execute(query);
@@ -144,7 +141,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 		System.out.println(query);
 	    st= conn.createStatement();
 		st.executeUpdate(query);
-		System.out.println("L'enregistrement a été rajouté");
+		System.out.println("L'enregistrement a Ã©tÃ© rajoutÃ©");
 		}
 		catch(SQLException e){
 		System.out.println(e.getMessage());	
@@ -168,7 +165,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 	}
 	
 
-	/* ################ Mettre à  jour un enregistrement ############################################################## */	
+	/* ################ Mettre Ã Â  jour un enregistrement ############################################################## */	
 	public static void UpdateColumn(Connection connexion, String table,String column, String value, String id, String valueId)
 	{	
 		java.sql.Statement st=null;
@@ -187,7 +184,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 		catch(SQLException e)
 		{
 		System.out.println(e.getMessage());	
-		System.out.println("L'enregistrement n'a pas été mis à jour");
+		System.out.println("L'enregistrement n'a pas Ã©tÃ© mis Ã  jour");
 		}
 	    
 	}
@@ -202,7 +199,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 			String query="DELETE FROM personne WHERE nom='"+nom+"';";
 		    st= conn.createStatement();
 			st.executeUpdate(query);
-			System.out.println("L'enregistrement a été supprimé");
+			System.out.println("L'enregistrement a Ã©tÃ© supprimÃ©");
 			
 		}
 		catch(SQLException e){
@@ -238,7 +235,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 			String JsonTexte=Texte.substring(0, Texte.length()-1)+"]}";
 			System.out.println(JsonTexte);
 			Fichier.ecrire(path,JsonTexte);
-			System.out.println("nbre de concept mappés "+cpt);
+			System.out.println("nbre de concept mappÃ©s "+cpt);
 			
 		}
 		catch(SQLException e){
@@ -309,7 +306,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 							System.out.println(queryInsert);
 						    st= conn.createStatement();
 							st.executeUpdate(queryInsert);
-							System.out.println("L'enregistrement a été rajouté");
+							System.out.println("L'enregistrement a Ã©tÃ© rajoutÃ©");
 							
 						}
 					} catch (Exception e) {
@@ -344,7 +341,7 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 	{
 		int nbreConceptFr=0;
 		int nbreConceptEn=0;
-		/* créer the view */
+		/* crÃ©er the view */
 
 		java.sql.Statement st=null;
 		try{
@@ -354,9 +351,9 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 			ResultSet rst=st.executeQuery(requeteNbreConcept);
 			//on place le curseur sur le dernier tuple 
 			rst.last(); 
-			//on récupère le numéro de la ligne 
+			//on rÃ©cupÃ¨re le numÃ©ro de la ligne 
 			nbreConceptFr = rst.getRow(); 
-			//on replace le curseur avant la première ligne 
+			//on replace le curseur avant la premiÃ¨re ligne 
 			rst.beforeFirst(); 
 			System.out.println("nbre cpts fr="+nbreConceptFr);
 
@@ -365,22 +362,20 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 			rst=st.executeQuery(requeteNbreConcept);
 			//on place le curseur sur le dernier tuple 
 			rst.last(); 
-			//on récupère le numéro de la ligne 
+			//on rÃ©cupÃ¨re le numÃ©ro de la ligne 
 			nbreConceptEn = rst.getRow(); 
-			//on replace le curseur avant la première ligne 
+			//on replace le curseur avant la premiÃ¨re ligne 
 			rst.beforeFirst(); 
 			System.out.println("nbre cpts En="+nbreConceptEn);
 			
 			//Suprimer la vue si elle existe
 			String mapQuery="DROP VIEW IF EXISTS map_"+tableFR+"_"+tableEN+";"; 
 			st.executeUpdate(mapQuery);
-			//créer la vue de mapping seon le code
+			//crÃ©er la vue de mapping seon le code
 			String requeteCreateView="CREATE VIEW  map_"+tableFR+"_"+tableEN+" AS SELECT DISTINCT a.uri fruri, b.uri enuri FROM "+tableFR+" a,"+tableEN+" b WHERE a.code=b.code;";
 			System.out.println(requeteCreateView);
 		    st= conn.createStatement();
 			st.executeUpdate(requeteCreateView);
-			
-			
 			
 			//le pourcentage de mapping fr
 			String requeteNbreConceptMappes="SELECT DISTINCT uri FROM "+tableFR+" WHERE uri not IN (SELECT fruri FROM map_"+tableFR+"_"+tableEN+")";
@@ -388,15 +383,15 @@ public static void addColumn(Connection connexion,String tableFR, String Column,
 			rst=st.executeQuery(requeteNbreConceptMappes);
 			//on place le curseur sur le dernier tuple 
 			rst.last(); 
-			//on récupère le numéro de la ligne 
+			//on rÃ©cupÃ¨re le numÃ©ro de la ligne 
 			int cNmapFr = rst.getRow(); 
 			int nbreCmapFr=nbreConceptFr-cNmapFr;
-			//on replace le curseur avant la première ligne 
+			//on replace le curseur avant la premiÃ¨re ligne 
 			rst.beforeFirst(); 
 			int pFR=100*nbreCmapFr/nbreConceptFr ;
-			System.out.println("nbre cpts fr mappés="+nbreCmapFr);
-			System.out.println("l'ontologie française est mappée à "+pFR+"% ");
-			System.out.println("Nombre de concepts fr non mappés "+(nbreConceptFr-nbreCmapFr) );
+			System.out.println("nbre cpts fr mappÃ©s="+nbreCmapFr);
+			System.out.println("l'ontologie franÃ§aise est mappÃ©e Ã  "+pFR+"% ");
+			System.out.println("Nombre de concepts fr non mappÃ©s "+(nbreConceptFr-nbreCmapFr) );
 			
 			
 		}
