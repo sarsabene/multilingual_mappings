@@ -5,7 +5,7 @@
 <?php
 $db="ontologies";
 $user="AAmina";
-$apiKey="c37c0e88-9cfb-405d-9bc2-e513e43b2a7e";
+$apiKey="myApiKey";
 $urlMapping = 'http://data.stageportal.lirmm.fr/mappings';
 $urlVerifPart1="http://stageportal.lirmm.fr/ontologies/MSHFRE?p=classes&conceptid=";
 $urlVerifPart2="#mappings";
