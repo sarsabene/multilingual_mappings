@@ -63,10 +63,7 @@ public class Fichier {
 		return dataTable; 
 		} 
 	
-	public static void main (String[] args) {
-		
-		ecrire("F:/AminaJava.txt","aminaAmine");
-	}
+
 	}
 
 
