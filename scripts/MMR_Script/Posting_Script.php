@@ -3,22 +3,17 @@
 <body>
 
 <?php
+/*************************************/
+/* Déclaration des variables*/
+/*************************************/
 $db="ontologies";
 $user="AAmina";
 $apiKey="myApiKey";
-$urlMapping = 'http://data.stageportal.lirmm.fr/mappings';
-$urlVerifPart1="http://stageportal.lirmm.fr/ontologies/MSHFRE?p=classes&conceptid=";
-$urlVerifPart2="#mappings";
-
 $creator="http://data.stageportal.lirmm.fr/users/AAmina";
 $source_contact_info="a_annane@esi.dz"; 
 $source="REST";
 $source_name="Reconciliation of multilingual mapping";
 $comment="Multilingual mapping between an English concept on NCBO BioPortal and its French translation on SIFR BioPortal";
-
-/*************************************/
-/* Déclaration des variables*/
-/*************************************/
 $ontoFR="CIM-10";
 $ontoEN="ncbo:ICD10";
 $skosRelation="http://www.w3.org/2004/02/skos/core#exactMatch";
@@ -34,22 +29,8 @@ AND     fr.code=SUBSTRING(en.code,1,7))) and fr.uri not in (select fr.uri from f
 /* *** *** *** *** *** ***  Le programme à executer *** ** *** *** *** *** *** *** */
 echo '[';
 $cpt=posterRequeteMapping($urlVerifPart1,$urlVerifPart2, $user,$apiKey,$ontoFR,$ontoEN,$skosRelation,$goldRelation,$urlMapping,$requete,$db,$cpt);
-$requete="select fr.uri fr_uri, en.uri en_uri  from fr_cim_10 fr, en_icd10 en where concat(fr.code,'-',fr.code,'.9')=en.code and fr.uri like '%(%)%';";
-$cpt=posterRequeteMapping($urlVerifPart1,$urlVerifPart2, $user,$apiKey,$ontoFR,$ontoEN,$skosRelation,$goldRelation,$urlMapping,$requete,$db,$cpt);
-$skosRelation="http://www.w3.org/2004/02/skos/core#broadMatch";
-$goldRelation="http://purl.org/linguistics/gold/translation";
-$requete="SELECT fr.uri fr_uri, en.uri en_uri  
-FROM fr_cim_10 fr, en_icd10 en 
-WHERE fr.uri NOT IN (SELECT DISTINCT  fr.uri FROM fr_cim_10 fr, en_icd10 en WHERE (fr.code=en.code)
-OR (fr.code like '%-%' AND en.code like '%-%' 
-        AND fr.code=SUBSTRING(en.code,1,7))) 
-        AND en.code=SUBSTRING_INDEX(fr.code, '.',1) ;";
-$cpt=posterRequeteMapping($urlVerifPart1,$urlVerifPart2, $user,$apiKey,$ontoFR,$ontoEN,$skosRelation,$goldRelation,$urlMapping,$requete,$db,$cpt);
 echo ']';
 echo $cpt;
-
-
-//if( searchOnTheWeb('http://stageportal.lirmm.fr/ontologies/WHO-ARTFRE/?p=classes&conceptid=http%3A%2F%2Fchu-rouen.fr%2Fcismef%2FWHO-ART%231228_PT#mappings','http://purl.bioontology.org/ontology/WHO/1228')<>1) echo 'hello1';
 /* *** *** *** *** *** ***  Déclaration des fonctions *** ** *** *** *** *** *** *** */
 
 /*************************************/
